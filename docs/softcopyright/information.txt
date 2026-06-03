@@ -1,0 +1,14 @@
+软件名称：基于Flutter的安卓开发学习移动应用软件
+版本号：V1.0.0
+开发的硬件环境：Windows 开发工作站，操作系统为 Microsoft Windows 10 家庭版，处理器为 Intel(R) Core(TM) Ultra 9 285H，物理内存约 31.5GB，配套安装 Android SDK、USB 调试环境与 Flutter 工具链，用于 Flutter 跨平台应用编码、调试、打包和真机联调。
+运行的硬件环境：Android 智能手机，真机截图采集设备为 OPPO PKS110，屏幕分辨率为 1080x2412，具备定位、加速度计、陀螺仪、蓝牙、相机和本地文件访问能力，可满足本软件演示移动端组件与硬件接口调用的运行要求。
+开发该软件的操作系统：Microsoft Windows 10 家庭版 64 位。
+软件开发环境/开发工具：Flutter 3.41.6、Dart 3.11.4、Android SDK、Gradle Kotlin DSL、ADB 真机调试工具、Kotlin 17 运行配置以及 Flutter 默认 Material 组件体系。
+该软件的运行平台/操作系统：Android 7.0 及以上版本移动终端，当前交付版本在 Android 16 真机环境完成运行验证；Android 安装包包名为 com.example.flutter_dudo。
+软件运行支撑环境/支持软件：Flutter Framework、Dart Runtime、Android Framework、定位服务、蓝牙服务、相机服务、媒体文件访问能力以及各硬件插件对应的系统权限支持。
+编程语言：Dart、Kotlin、Gradle Kotlin DSL。
+源程序量：核心自研代码约 2009 行，其中 Dart 代码约 1907 行、Kotlin 代码约 5 行、Android Manifest 与构建配置约 97 行；以上统计不包含 Flutter SDK、第三方插件源码和构建产物。
+开发目的：本软件面向 Flutter 安卓移动应用开发学习场景，旨在通过一个可直接运行的移动端应用，将常见组件、页面组织方式、表单交互、异步数据处理、主题切换以及移动设备硬件能力接入等知识点集成到统一的教学型应用中，帮助学习者在真实 Android 终端上观察界面效果、理解页面状态变化并掌握常见插件的使用方法。
+面向行业/领域：移动应用开发教育、软件工程实践教学、Flutter 技术培训、移动端基础实验教学。
+软件的主要功能：本软件围绕“Flutter 安卓开发学习”这一主题构建完整的移动端演示流程。应用启动后首先进入首页模块列表，集中展示文本与显示组件学习、常见布局组件学习、按钮与点击交互学习、输入组件与表单学习、弹窗与提示反馈学习、导航与页面切换学习、状态更新与父子传值学习、主题样式学习、异步加载与列表展示学习以及硬件设备示例学习等多个功能入口。文本与显示模块用于演示普通文本、富文本、图标、头像、网络图片与失败兜底展示；布局模块用于演示 Row、Column、Expanded、Wrap、Stack 等布局方式；按钮交互模块展示不同按钮形态、启用/禁用切换和点击次数统计；表单模块提供姓名输入、城市选择、协议勾选和表单校验提交流程；反馈模块通过 SnackBar、对话框和底部弹层展示移动端常见交互反馈。导航模块实现 push、pushNamed、参数传递和页面结果回传；状态提升模块展示父组件保存状态、子组件回调更新的经典 Flutter 数据流模式；主题样式模块演示浅色与深色主题切换以及统一视觉样式管理；异步列表模块通过 FutureBuilder 模拟接口延迟、错误状态与刷新流程。硬件入口模块进一步整合 GPS 定位、陀螺仪与加速度计、相机拍照、本地文件读取和蓝牙扫描等示例页面，使学习者可以在一套应用中同时掌握界面组件与设备能力接入方式，形成较为完整的安卓移动应用开发学习闭环。
+软件的技术特点：本软件采用 Flutter 作为前端跨平台开发框架，整体结构以 MaterialApp 为根容器，通过首页列表对多个学习模块进行统一编排。页面层面大量使用 StatelessWidget、StatefulWidget、setState、WidgetBuilder、MaterialPageRoute 与命名路由等 Flutter 基础能力，形成清晰的页面导航和状态控制机制。应用内部通过统一的 DemoPageTemplate、SectionCard、CodeBlock 和 NetworkImageWithFallback 等组件实现页面模板复用，降低重复代码并提高展示一致性。异步模块采用 FutureBuilder 组织等待态、异常态和结果态；表单模块结合 GlobalKey<FormState>、TextEditingController 与 validator 机制完成表单验证；导航模块通过自定义 NavigationResult 对象回传结果；状态提升模块使用父子组件回调传值体现单向数据流思想。硬件能力方面，应用接入 geolocator、sensors_plus、image_picker、file_picker、flutter_blue_plus 等插件，分别完成定位、传感器、相机、文件读取与蓝牙扫描能力封装，并在 AndroidManifest 中声明定位、相机、蓝牙和媒体读取权限。Android 构建侧采用 Kotlin DSL 管理应用包名、版本号、最小支持版本和发布构建配置，当前版本号为 1.0.0，minSdk 为 24，targetSdk 为 36。整体技术路线突出“组件演示 + 页面交互 + 插件接入 + 真机验证”的特点，适合移动应用开发教学与实验演示使用。
