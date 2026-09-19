@@ -6,47 +6,60 @@
 - 版本号：V1.0.0
 - 应用标题：Flutter组件实验手册
 - Android 包名：`com.example.flutter_dudo`
-- 代码规模：约 2009 行自研代码
+- 代码规模：约 2088 行核心自研代码
 
 ## 2 源代码属性结构说明
 
-- 技术栈：Flutter、Dart、Kotlin、Android Gradle Kotlin DSL
-- 源码根目录：`D:\workspace\front\flutter_dudo`
+- 技术栈：Flutter、Dart、Kotlin、Android Gradle Kotlin DSL、XML。
+- 源码根目录：`D:\workspace\front\flutter_dudo`。
 - 一级目录划分：`android/` 用于 Android 构建与权限声明，`lib/` 用于 Flutter 页面与组件实现，`docs/` 用于软著材料输出。
 - 二级目录划分：`lib/pages/` 承载页面模块，`lib/widgets/` 承载通用组件，`lib/pages/hardware/` 承载设备能力示例。
-- 三级目录划分：`lib/pages/navigation/` 存放导航结果模型与详情页，`android/app/src/main/` 存放 Android 主配置。
 - 选入范围说明：纳入应用配置、Flutter 页面、通用组件、Android 权限清单和启动入口，不纳入第三方依赖、构建缓存和生成产物。
 
-## 3 三级目录结构树
+## 3 三级目录结构表
 
 ```text
-├── pubspec.yaml
 ├── android
 │   └── app
 │       ├── build.gradle.kts
 │       └── src
-└── lib
-    ├── main.dart
-    ├── app.dart
-    ├── pages
-    │   ├── home_page.dart
-    │   ├── text_display_page.dart
-    │   ├── layout_widgets_page.dart
-    │   ├── button_interaction_page.dart
-    │   ├── form_input_page.dart
-    │   ├── feedback_page.dart
-    │   ├── navigation_page.dart
-    │   ├── navigation
-    │   ├── state_lifting_page.dart
-    │   ├── theme_page.dart
-    │   ├── async_list_page.dart
-    │   ├── hardware_hub_page.dart
-    │   └── hardware
-    └── widgets
-        ├── demo_page_template.dart
-        ├── section_card.dart
-        ├── code_block.dart
-        └── network_image_with_fallback.dart
+│           └── main
+│               ├── AndroidManifest.xml
+│               └── kotlin
+│                   └── com
+│                       └── example
+│                           └── flutter_dudo
+│                               └── MainActivity.kt
+├── lib
+│   ├── app.dart
+│   ├── main.dart
+│   ├── pages
+│   │   ├── async_list_page.dart
+│   │   ├── button_interaction_page.dart
+│   │   ├── feedback_page.dart
+│   │   ├── form_input_page.dart
+│   │   ├── hardware
+│   │   │   ├── bluetooth_demo_page.dart
+│   │   │   ├── camera_demo_page.dart
+│   │   │   ├── file_read_demo_page.dart
+│   │   │   ├── gps_demo_page.dart
+│   │   │   └── sensor_demo_page.dart
+│   │   ├── hardware_hub_page.dart
+│   │   ├── home_page.dart
+│   │   ├── layout_widgets_page.dart
+│   │   ├── navigation
+│   │   │   ├── navigation_result.dart
+│   │   │   └── route_detail_page.dart
+│   │   ├── navigation_page.dart
+│   │   ├── state_lifting_page.dart
+│   │   ├── text_display_page.dart
+│   │   └── theme_page.dart
+│   └── widgets
+│       ├── code_block.dart
+│       ├── demo_page_template.dart
+│       ├── network_image_with_fallback.dart
+│       └── section_card.dart
+└── pubspec.yaml
 ```
 
 ## 4 按目录顺序整理的源代码
@@ -55,7 +68,7 @@
 
 文件路径：`pubspec.yaml`
 
-文件作用：定义应用名称、版本号、Flutter SDK 约束和硬件插件依赖。
+文件作用：定义应用名称、版本、Flutter SDK 约束和硬件能力相关插件依赖。
 
 所属模块：项目配置
 
@@ -145,7 +158,7 @@ flutter:
 
 文件路径：`android/app/build.gradle.kts`
 
-文件作用：定义 Android 应用命名空间、应用包名、版本号和构建类型。
+文件作用：配置 Android 命名空间、包名、版本、Java/Kotlin 编译目标和构建类型。
 
 所属模块：Android 构建配置
 
@@ -200,7 +213,7 @@ flutter {
 
 文件路径：`android/app/src/main/AndroidManifest.xml`
 
-文件作用：声明定位、相机、蓝牙和媒体读取权限，并配置主入口 Activity。
+文件作用：声明定位、相机、媒体读取、蓝牙扫描与连接权限，并配置主入口 Activity。
 
 所属模块：Android 权限配置
 
@@ -264,7 +277,7 @@ flutter {
 
 文件路径：`android/app/src/main/kotlin/com/example/flutter_dudo/MainActivity.kt`
 
-文件作用：提供 FlutterActivity 宿主，作为 Android 端启动壳。
+文件作用：提供 FlutterActivity 宿主入口。
 
 所属模块：Android 启动入口
 
@@ -280,7 +293,7 @@ class MainActivity : FlutterActivity()
 
 文件路径：`lib/main.dart`
 
-文件作用：完成 Flutter 绑定初始化并启动根组件。
+文件作用：初始化 Flutter 绑定并启动根组件。
 
 所属模块：应用入口
 
@@ -362,7 +375,7 @@ class _FlutterWidgetLabAppState extends State<FlutterWidgetLabApp> {
 
 文件路径：`lib/pages/home_page.dart`
 
-文件作用：展示全部学习模块列表并负责进入各功能页面。
+文件作用：展示学习模块列表并进入各功能页面。
 
 所属模块：首页模块
 
@@ -505,7 +518,7 @@ class _ModuleItem {
 
 文件路径：`lib/pages/text_display_page.dart`
 
-文件作用：演示文本、富文本、图片、图标和开关式参数调整。
+文件作用：演示文本、富文本、图标、图片和参数联动显示。
 
 所属模块：基础展示模块
 
@@ -749,7 +762,7 @@ class _DemoColorBox extends StatelessWidget {
 
 文件路径：`lib/pages/button_interaction_page.dart`
 
-文件作用：演示多种按钮组件、启停控制和点击计数。
+文件作用：演示按钮状态、禁用控制和点击计数。
 
 所属模块：按钮交互模块
 
@@ -858,7 +871,7 @@ setState(() {
 
 文件路径：`lib/pages/form_input_page.dart`
 
-文件作用：演示 TextField、下拉框、校验规则与表单提交。
+文件作用：演示 TextField、下拉选择、协议勾选、校验和提交反馈。
 
 所属模块：表单输入模块
 
@@ -998,7 +1011,7 @@ Form(
 
 文件路径：`lib/pages/feedback_page.dart`
 
-文件作用：演示 SnackBar、Dialog 与 BottomSheet 反馈场景。
+文件作用：演示 SnackBar、Dialog 和 BottomSheet 反馈场景。
 
 所属模块：反馈提示模块
 
@@ -1210,7 +1223,7 @@ final result = await Navigator.pushNamed<ResultType>(
 
 文件路径：`lib/pages/navigation/route_detail_page.dart`
 
-文件作用：接收页面参数并将处理结果返回上级页面。
+文件作用：接收页面参数并向上级页面返回处理结果。
 
 所属模块：路由详情模块
 
@@ -1274,7 +1287,7 @@ class NavigationResult {
 
 文件路径：`lib/pages/state_lifting_page.dart`
 
-文件作用：演示父子组件状态同步、步长切换与回调传值。
+文件作用：演示父组件统一管理状态、子组件通过回调触发变更。
 
 所属模块：状态提升模块
 
@@ -1414,7 +1427,7 @@ class _StepSelector extends StatelessWidget {
 
 文件路径：`lib/pages/theme_page.dart`
 
-文件作用：演示浅色与深色主题切换及统一样式预览。
+文件作用：演示浅色、深色和系统主题模式切换。
 
 所属模块：主题样式模块
 
@@ -1505,9 +1518,9 @@ MaterialApp(
 
 文件路径：`lib/pages/async_list_page.dart`
 
-文件作用：演示 FutureBuilder、异常状态和异步列表刷新。
+文件作用：演示 FutureBuilder 的等待、错误和结果状态。
 
-所属模块：异步加载模块
+所属模块：异步列表模块
 
 ```dart
 import 'package:flutter/material.dart';
@@ -1637,7 +1650,7 @@ FutureBuilder<List<String>>(
 
 文件路径：`lib/pages/hardware_hub_page.dart`
 
-文件作用：汇聚定位、传感器、相机、文件与蓝牙能力子页面。
+文件作用：集中组织定位、传感器、相机、文件读取和蓝牙能力入口。
 
 所属模块：硬件入口模块
 
@@ -1734,7 +1747,7 @@ class _HardwareItem {
 
 文件路径：`lib/pages/hardware/gps_demo_page.dart`
 
-文件作用：封装定位服务检查、权限申请与经纬度读取逻辑。
+文件作用：封装定位服务检查、权限申请和经纬度读取逻辑。
 
 所属模块：定位能力模块
 
@@ -1825,7 +1838,7 @@ final position = await Geolocator.getCurrentPosition(
 
 文件路径：`lib/pages/hardware/sensor_demo_page.dart`
 
-文件作用：订阅陀螺仪和加速度计数据流并实时更新界面。
+文件作用：订阅陀螺仪和加速度计数据流并实时刷新界面。
 
 所属模块：传感器能力模块
 
@@ -1942,7 +1955,7 @@ accelerometerEvents.listen((event) {
 
 文件路径：`lib/pages/hardware/camera_demo_page.dart`
 
-文件作用：通过 image_picker 调起相机并回显拍照结果。
+文件作用：调用系统相机并回显拍照结果。
 
 所属模块：相机能力模块
 
@@ -2034,7 +2047,7 @@ final photo = await ImagePicker().pickImage(
 
 文件路径：`lib/pages/hardware/file_read_demo_page.dart`
 
-文件作用：通过 file_picker 选择本地文件并预览文本内容。
+文件作用：选择本地文件并预览文本内容。
 
 所属模块：文件读取模块
 
@@ -2243,7 +2256,7 @@ FlutterBluePlus.scanResults.listen((results) {
 
 文件路径：`lib/widgets/demo_page_template.dart`
 
-文件作用：统一演示页面的场景说明、提示、代码区和效果区布局。
+文件作用：统一演示页面的场景说明、代码区和效果区布局。
 
 所属模块：页面模板组件
 
@@ -2309,9 +2322,9 @@ class DemoPageTemplate extends StatelessWidget {
 
 文件路径：`lib/widgets/section_card.dart`
 
-文件作用：统一承载模块页面中的分区说明内容。
+文件作用：承载模块页面中的分区内容。
 
-所属模块：通用卡片组件
+所属模块：通用分区组件
 
 ```dart
 import 'package:flutter/material.dart';
@@ -2351,7 +2364,7 @@ class SectionCard extends StatelessWidget {
 
 文件路径：`lib/widgets/code_block.dart`
 
-文件作用：负责高可读性展示示例代码片段。
+文件作用：展示示例代码片段。
 
 所属模块：代码展示组件
 
