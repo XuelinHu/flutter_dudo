@@ -5,12 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 class _MemorySettings implements AiSettingsRepository {
   AiSettings value = const AiSettings();
+  int saveCount = 0;
 
   @override
   Future<AiSettings> load() async => value;
 
   @override
-  Future<void> save(AiSettings settings) async => value = settings;
+  Future<void> save(AiSettings settings) async {
+    saveCount++;
+    value = settings;
+  }
 }
 
 void main() {
@@ -31,4 +35,34 @@ void main() {
       expect(find.text('发送问题'), findsOneWidget);
     },
   );
+
+  testWidgets('rejects a LAN HTTP key before saving or sending a prompt', (
+    tester,
+  ) async {
+    final settings = _MemorySettings()
+      ..value = const AiSettings(
+        endpoint: 'http://192.168.1.9:8999/v1/chat/completions',
+        model: 'test-model',
+        apiKey: 'test-key',
+      );
+    await tester.pumpWidget(
+      MaterialApp(home: AiAssistantPage(settingsRepository: settings)),
+    );
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).last, 'test prompt');
+    await tester.scrollUntilVisible(
+      find.text('发送问题'),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('发送问题'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('发送 API Key 必须使用 HTTPS；HTTP 仅允许本机回环地址。'),
+      findsOneWidget,
+    );
+    expect(settings.saveCount, 0);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
 }

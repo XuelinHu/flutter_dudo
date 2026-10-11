@@ -78,6 +78,7 @@ class _AiAssistantPageState extends State<AiAssistantPage> {
       _answer = '';
     });
     try {
+      OpenAiCompatClient.validateEndpoint(_endpoint.text, apiKey: _apiKey.text);
       await widget.settingsRepository.save(_settings);
       final answer = await widget.client.chat(
         settings: _settings,
