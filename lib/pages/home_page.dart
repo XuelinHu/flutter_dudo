@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'async_list_page.dart';
+import 'ai_assistant_page.dart';
 import 'button_interaction_page.dart';
 import 'feedback_page.dart';
 import 'form_input_page.dart';
@@ -85,6 +86,12 @@ class HomePage extends StatelessWidget {
         subtitle: 'GPS / 传感器 / 相机 / 文件 / 蓝牙',
         icon: Icons.memory_outlined,
         builder: (BuildContext context) => const HardwareHubPage(),
+      ),
+      _ModuleItem(
+        title: 'AI 模型接入示例',
+        subtitle: 'OpenAI 兼容接口 / 局域网 Ollama / DeepSeek',
+        icon: Icons.auto_awesome_outlined,
+        builder: (BuildContext context) => AiAssistantPage(),
       ),
     ];
 

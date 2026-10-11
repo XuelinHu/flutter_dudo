@@ -20,12 +20,12 @@ class _SensorDemoPageState extends State<SensorDemoPage> {
   void _startListen() {
     _gyroSub?.cancel();
     _accSub?.cancel();
-    _gyroSub = gyroscopeEvents.listen((GyroscopeEvent event) {
+    _gyroSub = gyroscopeEventStream().listen((GyroscopeEvent event) {
       setState(() {
         _gyro = event;
       });
     });
-    _accSub = accelerometerEvents.listen((AccelerometerEvent event) {
+    _accSub = accelerometerEventStream().listen((AccelerometerEvent event) {
       setState(() {
         _acc = event;
       });

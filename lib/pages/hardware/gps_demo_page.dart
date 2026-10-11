@@ -35,7 +35,9 @@ class _GpsDemoPageState extends State<GpsDemoPage> {
       }
 
       final Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
       );
       setState(() {
         _status =

@@ -84,7 +84,7 @@ Form(
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
-              value: _city,
+              initialValue: _city,
               decoration: const InputDecoration(
                 labelText: '城市',
                 border: OutlineInputBorder(),
