@@ -29,11 +29,11 @@ class _CameraDemoPageState extends State<CameraDemoPage> {
       }
       setState(() {
         _photo = file;
-        _status = '拍照成功：${file.path}';
+        _status = '拍照成功，照片仅在当前页面预览。';
       });
-    } catch (e) {
+    } catch (_) {
       setState(() {
-        _status = '拍照失败: $e';
+        _status = '拍照失败，请检查相机权限或设备状态。';
       });
     }
   }

@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import '../../services/local_text_file_preview.dart';
 import '../../widgets/demo_page_template.dart';
 
 class FileReadDemoPage extends StatefulWidget {
@@ -27,16 +27,16 @@ class _FileReadDemoPageState extends State<FileReadDemoPage> {
         return;
       }
       final String filePath = result.files.single.path!;
-      final String content = await File(filePath).readAsString();
+      final preview = await LocalTextFilePreview.read(filePath);
       setState(() {
-        _status = '读取成功: $filePath';
-        _contentPreview = content.length > 400
-            ? '${content.substring(0, 400)}...'
-            : content;
+        _status = '读取成功：${preview.fileName}';
+        _contentPreview = preview.content;
       });
-    } catch (e) {
+    } on FormatException {
+      setState(() => _status = '文件超过 5 MiB 限制，请选择较小的文本文件。');
+    } catch (_) {
       setState(() {
-        _status = '读取失败: $e';
+        _status = '读取失败，请确认文件可访问且编码为 UTF-8。';
       });
     }
   }
@@ -49,7 +49,7 @@ class _FileReadDemoPageState extends State<FileReadDemoPage> {
       tips: const <String>[
         '把允许后缀扩展为 csv、xml 等',
         '把 readAsString 改成 readAsBytes 读取二进制',
-        '加入文件大小限制提示',
+        '单个文本文件限制为 5 MiB，避免大文件占满内存',
       ],
       keyCode: '''
 final result = await FilePicker.platform.pickFiles();
