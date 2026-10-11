@@ -53,7 +53,7 @@ class SecureAiSettingsRepository implements AiSettingsRepository {
 class OpenAiCompatClient {
   const OpenAiCompatClient();
 
-  static Uri validateEndpoint(String value) {
+  static Uri validateEndpoint(String value, {String apiKey = ''}) {
     final uri = Uri.tryParse(value.trim());
     if (uri == null ||
         uri.host.isEmpty ||
@@ -67,10 +67,16 @@ class OpenAiCompatClient {
     if (uri.scheme == 'http' && !_isPrivateHost(uri.host)) {
       throw const AiRequestException('HTTP 仅允许内网地址；公网服务请使用 HTTPS。');
     }
+    if (uri.scheme == 'http' &&
+        apiKey.trim().isNotEmpty &&
+        !_isLoopbackHost(uri.host)) {
+      throw const AiRequestException('发送 API Key 必须使用 HTTPS；HTTP 仅允许本机回环地址。');
+    }
     return uri;
   }
 
   static bool _isPrivateHost(String host) {
+    if (host == '::1') return true;
     final octets = host.split('.').map(int.tryParse).toList();
     if (octets.length != 4 ||
         octets.any((part) => part == null || part > 255)) {
@@ -84,11 +90,14 @@ class OpenAiCompatClient {
         (first == 192 && second == 168);
   }
 
+  static bool _isLoopbackHost(String host) =>
+      host == 'localhost' || host == '127.0.0.1' || host == '::1';
+
   Future<String> chat({
     required AiSettings settings,
     required String prompt,
   }) async {
-    final uri = validateEndpoint(settings.endpoint);
+    final uri = validateEndpoint(settings.endpoint, apiKey: settings.apiKey);
     if (settings.model.trim().isEmpty) {
       throw const AiRequestException('请填写模型名称。');
     }

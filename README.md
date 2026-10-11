@@ -4,7 +4,7 @@
 
 ## AI 模型示例
 
-首页的“AI 模型接入示例”支持 OpenAI Chat Completions 兼容接口，可连接局域网 Ollama、DeepSeek 或兼容服务。默认地址为 `http://192.168.1.9:11434/v1/chat/completions`，模型名可在应用内修改。公网服务必须用 HTTPS；API Key 通过 Android 安全存储保存，不写入 APK。没有配置模型服务时，应用其余学习模块仍可离线使用。
+首页的“AI 模型接入示例”支持 OpenAI Chat Completions 兼容接口，可连接局域网 Ollama、DeepSeek 或兼容服务。默认地址为 `http://192.168.1.9:11434/v1/chat/completions`，模型名可在应用内修改。任何非本机回环 HTTP 接口都不能发送 API Key，配置密钥时必须使用 HTTPS；无密钥的内网 Ollama 仍可使用 HTTP。API Key 通过 Android 安全存储保存，不写入 APK。没有配置模型服务时，应用其余学习模块仍可离线使用。
 
 ## 启动与构建
 

@@ -53,7 +53,7 @@ class _AiAssistantPageState extends State<AiAssistantPage> {
 
   Future<void> _save() async {
     try {
-      OpenAiCompatClient.validateEndpoint(_endpoint.text);
+      OpenAiCompatClient.validateEndpoint(_endpoint.text, apiKey: _apiKey.text);
       if (_model.text.trim().isEmpty)
         throw const AiRequestException('请填写模型名称。');
       await widget.settingsRepository.save(_settings);
@@ -131,6 +131,7 @@ class _AiAssistantPageState extends State<AiAssistantPage> {
                   autofillHints: const [AutofillHints.password],
                   decoration: const InputDecoration(
                     labelText: 'API Key（本机安全存储，可留空）',
+                    helperText: '内网 Ollama 可无密钥使用 HTTP；填写密钥时接口必须使用 HTTPS。',
                   ),
                 ),
                 const SizedBox(height: 10),

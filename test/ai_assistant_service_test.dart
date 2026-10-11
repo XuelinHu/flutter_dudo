@@ -19,6 +19,27 @@ void main() {
       '192.168.1.9',
     );
     expect(
+      () => OpenAiCompatClient.validateEndpoint(
+        'http://192.168.1.9:8999/v1/chat/completions',
+        apiKey: 'test-key',
+      ),
+      throwsA(isA<AiRequestException>()),
+    );
+    expect(
+      OpenAiCompatClient.validateEndpoint(
+        'http://127.0.0.1:8999/v1/chat/completions',
+        apiKey: 'test-key',
+      ).host,
+      '127.0.0.1',
+    );
+    expect(
+      OpenAiCompatClient.validateEndpoint(
+        'https://models.example.com/v1/chat/completions',
+        apiKey: 'test-key',
+      ).scheme,
+      'https',
+    );
+    expect(
       OpenAiCompatClient.validateEndpoint(
         'https://api.example.com/v1/chat/completions',
       ).host,
@@ -67,6 +88,26 @@ void main() {
     await handler;
     await server.close(force: true);
     expect(answer, '可运行的回答');
+  });
+
+  test('refuses to send an API key to a LAN HTTP endpoint', () async {
+    await expectLater(
+      const OpenAiCompatClient().chat(
+        settings: const AiSettings(
+          endpoint: 'http://192.168.1.9:8999/v1/chat/completions',
+          model: 'test-model',
+          apiKey: 'test-key',
+        ),
+        prompt: 'test',
+      ),
+      throwsA(
+        isA<AiRequestException>().having(
+          (error) => error.message,
+          'message',
+          contains('必须使用 HTTPS'),
+        ),
+      ),
+    );
   });
 
   test('rejects redirects without forwarding the API key', () async {
