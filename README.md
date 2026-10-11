@@ -1,5 +1,10 @@
 # Flutter 组件实验手册
 
+<p align="center">
+  <img height="20" alt="Flutter" src="https://img.shields.io/badge/flutter-used-02569B" />
+  <img height="20" alt="Dart SDK 3.11.4+" src="https://img.shields.io/badge/dart-3.11.4%2B-0175C2" />
+</p>
+
 一个 Flutter 常用组件与设备能力的中文学习应用，包含布局、表单、导航、状态、主题、异步列表、GPS、传感器、相机、文件和蓝牙示例。
 
 ## AI 模型示例
